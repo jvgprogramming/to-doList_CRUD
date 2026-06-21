@@ -61,8 +61,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-1 flex-col">
+      {/* Main Content - offset by sidebar width on desktop */}
+      <div className="relative z-10 flex flex-1 flex-col lg:ml-64">
         {/* Floating Navbar */}
         <Navbar onMenuClick={() => setSidebarOpen(true)} />
 
