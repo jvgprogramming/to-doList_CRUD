@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Task Manager',
-  description: 'A professional task management application',
+  title: 'Task Manager — Premium Dashboard',
+  description: 'A premium, futuristic task management platform with an elegant glassmorphism design',
 };
 
 export default function RootLayout({
@@ -26,7 +26,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+      style={{ colorScheme: 'dark' }}
     >
       <body className="min-h-screen bg-background font-sans">
         {children}
@@ -35,6 +36,14 @@ export default function RootLayout({
           richColors
           closeButton
           duration={4000}
+          toastOptions={{
+            style: {
+              background: 'rgba(255, 255, 255, 0.04)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              color: '#f5f5f7',
+            },
+          }}
         />
       </body>
     </html>

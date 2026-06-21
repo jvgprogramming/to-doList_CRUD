@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, ListTodo, LogOut, X } from 'lucide-react';
+import { LayoutDashboard, ListTodo, LogOut, X, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { APP_ROUTES } from '@/constants/routes';
@@ -27,7 +27,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Mobile overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
@@ -35,20 +35,21 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r bg-background transition-transform duration-300 lg:static lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r transition-all duration-300 lg:static lg:translate-x-0',
+          'glass border-r-[rgba(255,255,255,0.06)]',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Logo */}
-        <div className="flex h-16 items-center justify-between border-b px-6">
-          <Link href={APP_ROUTES.DASHBOARD} className="flex items-center gap-2 font-semibold">
-            <ListTodo className="h-6 w-6 text-primary" />
-            <span>Task Manager</span>
+        <div className="flex h-16 items-center justify-between border-b border-[rgba(255,255,255,0.06)] px-6">
+          <Link href={APP_ROUTES.DASHBOARD} className="flex items-center gap-2.5 group">
+
+            <span className="text-sm font-semibold tracking-tight text-white/90">TaskFlow</span>
           </Link>
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className="lg:hidden text-white/40 hover:text-white/80 hover:bg-white/5"
             onClick={onClose}
           >
             <X className="h-4 w-4" />
@@ -57,6 +58,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1 p-4">
+          <p className="section-title px-3 pb-2">Navigation</p>
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -66,29 +68,36 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                  'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                    ? 'bg-white/8 text-white shadow-sm'
+                    : 'text-white/40 hover:text-white/70 hover:bg-white/5'
                 )}
               >
                 <Icon className="h-4 w-4" />
                 {item.label}
+                {isActive && (
+                  <div className="ml-auto h-1.5 w-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(99,102,241,0.5)]" />
+                )}
               </Link>
             );
           })}
         </nav>
 
         {/* Logout */}
-        <div className="border-t p-4">
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-3 text-muted-foreground"
+        <div className="border-t border-[rgba(255,255,255,0.06)] p-4">
+          <button
+            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/40 transition-all duration-200 hover:text-white/70 hover:bg-white/5"
             onClick={logout}
           >
             <LogOut className="h-4 w-4" />
             Logout
-          </Button>
+          </button>
+        </div>
+
+        {/* Version */}
+        <div className="px-6 pb-4">
+          <p className="text-[10px] text-white/20 tracking-wider uppercase">v2.0.0 — Premium</p>
         </div>
       </aside>
     </>
