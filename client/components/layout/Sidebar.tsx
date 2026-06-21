@@ -39,6 +39,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           'glass border-r-[rgba(255,255,255,0.06)]',
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
+        onClick={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
       >
         {/* Logo */}
         <div className="flex shrink-0 h-16 items-center justify-between border-b border-[rgba(255,255,255,0.06)] px-6">

@@ -8,8 +8,9 @@
     --foreground: #f5f5f7;
     --card: rgba(255, 255, 255, 0.04);
     --card-foreground: #f5f5f7;
-    --popover: rgba(255, 255, 255, 0.04);
+    --popover: rgba(15, 15, 20, 0.92);
     --popover-foreground: #f5f5f7;
+    --popover-blur: 24px;
     --primary: #6366f1;
     --primary-foreground: #ffffff;
     --secondary: rgba(255, 255, 255, 0.08);

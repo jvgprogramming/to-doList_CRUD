@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Navbar } from '@/components/layout/Navbar';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sidebarOpenedAt = useRef(0);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative flex min-h-screen overflow-hidden">
+    <div ref={containerRef} className="relative flex min-h-screen overflow-x-hidden lg:overflow-hidden">
       {/* Background glows - ambient neon lighting */}
       <div
         className="pointer-events-none fixed inset-0 z-0"
@@ -59,12 +60,21 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       />
 
       {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Sidebar isOpen={sidebarOpen} onClose={useCallback(() => {
+        // Guard: ignore close if it fires within 500ms of opening.
+        // Prevents synthetic click events on mobile from hitting the
+        // newly rendered overlay and immediately closing the sidebar.
+        if (Date.now() - sidebarOpenedAt.current < 500) return;
+        setSidebarOpen(false);
+      }, [])} />
 
       {/* Main Content - offset by sidebar width on desktop */}
       <div className="relative z-10 flex flex-1 flex-col lg:ml-64">
         {/* Floating Navbar */}
-        <Navbar onMenuClick={() => setSidebarOpen(true)} />
+        <Navbar onMenuClick={() => {
+          sidebarOpenedAt.current = Date.now();
+          setSidebarOpen(true);
+        }} />
 
         {/* Page Content */}
         <main className="flex-1 p-4 lg:p-6 pt-4 animate-fade-in">
@@ -72,16 +82,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </main>
 
         {/* Footer */}
-        <footer className="px-6 pb-4">
-          <div className="flex items-center justify-between rounded-2xl glass px-5 py-3">
-            <p className="text-xs text-white/30">
-              © {new Date().getFullYear()} TaskFlow. All rights reserved.
+        <footer className="px-2 sm:px-6 pb-2 sm:pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl glass px-3 sm:px-5 py-2 sm:py-3">
+            <p className="text-[10px] sm:text-xs text-white/30">
+              © {new Date().getFullYear()} TaskFlow
             </p>
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-white/20">Status</span>
-              <span className="flex items-center gap-1.5 text-xs text-green-400/70">
-                <span className="glow-dot glow-dot-green bg-green-400" />
-                All systems normal
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+              <span className="text-[10px] sm:text-xs text-white/20 hidden xs:inline">Status</span>
+              <span className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs text-green-400/70">
+                <span className="glow-dot glow-dot-green bg-green-400 shrink-0" />
+                <span className="hidden xs:inline">All systems normal</span>
+                <span className="xs:hidden">Online</span>
               </span>
             </div>
           </div>

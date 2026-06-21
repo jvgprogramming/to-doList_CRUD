@@ -119,13 +119,13 @@ export default function DashboardPage() {
           <div className="pointer-events-none absolute -top-20 -right-20 h-60 w-60 rounded-full bg-indigo-500/10 blur-[80px]" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-purple-500/8 blur-[60px]" />
 
-          <div className="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="relative flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div className="space-y-2">
               <div className="flex items-center gap-2.5">
                 <div className="h-2.5 w-2.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
                 <span className="text-xs font-medium text-green-400/80 tracking-wide uppercase">Active</span>
               </div>
-              <h1 className="text-3xl lg:text-4xl font-bold tracking-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-tight">
                 Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'},{' '}
                 <span className="text-gradient-primary">{user?.full_name?.split(' ')[0] || 'User'}</span>
               </h1>
@@ -134,25 +134,25 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3.5 py-2">
-                <Calendar className="h-4 w-4 text-white/40" />
-                <span className="text-xs text-white/60">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+              <div className="flex items-center gap-1.5 sm:gap-2 rounded-xl bg-white/5 border border-white/10 px-2.5 sm:px-3.5 py-1.5 sm:py-2 min-w-0">
+                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white/40 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-white/60 truncate">
                   {new Date().toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    month: 'long',
+                    weekday: 'short',
+                    month: 'short',
                     day: 'numeric',
                   })}
                 </span>
               </div>
-              <div className="flex -space-x-2">
+              <div className="flex -space-x-1.5 sm:-space-x-2 shrink-0">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="h-8 w-8 rounded-full border-2 border-[#0a0a0a] bg-gradient-to-br from-indigo-500/30 to-purple-500/30 ring-1 ring-white/10"
+                    className="h-6 w-6 sm:h-8 sm:w-8 rounded-full border-2 border-[#0a0a0a] bg-gradient-to-br from-indigo-500/30 to-purple-500/30 ring-1 ring-white/10"
                   />
                 ))}
-                <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0a0a0a] bg-white/5 text-[10px] font-medium text-white/40 ring-1 ring-white/10">
+                <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full border-2 border-[#0a0a0a] bg-white/5 text-[8px] sm:text-[10px] font-medium text-white/40 ring-1 ring-white/10">
                   +3
                 </div>
               </div>

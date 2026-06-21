@@ -22,13 +22,19 @@ export function Navbar({ onMenuClick }: NavbarProps) {
     : 'U';
 
   return (
-    <header className="sticky top-4 z-30 mx-4 lg:mx-6">
-      <div className="flex h-14 items-center gap-4 rounded-2xl glass px-4 shadow-glass">
+    <header className="sticky top-4 z-30 mx-2 sm:mx-4 lg:mx-6">
+      <div className="flex h-14 items-center gap-2 sm:gap-4 rounded-2xl glass px-3 sm:px-4 shadow-glass">
         <Button
           variant="ghost"
           size="icon"
           className="lg:hidden text-white/40 hover:text-white/80 hover:bg-white/5"
           onClick={onMenuClick}
+          onTouchEnd={(e) => {
+            // Prevent the browser from synthesizing a click event on the
+            // overlay that appears after the sidebar opens.
+            e.preventDefault();
+            onMenuClick();
+          }}
         >
           <Menu className="h-5 w-5" />
         </Button>
@@ -46,10 +52,10 @@ export function Navbar({ onMenuClick }: NavbarProps) {
           </div>
         </div>
 
-        <div className="flex-1 md:flex-none" />
+        <div className="flex-1 md:flex-none min-w-0" />
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           <Button
             variant="ghost"
             size="icon"
@@ -59,12 +65,12 @@ export function Navbar({ onMenuClick }: NavbarProps) {
             <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(99,102,241,0.5)]" />
           </Button>
 
-          <div className="flex items-center gap-3 pl-2 border-l border-white/10">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-white/90">{user?.full_name || 'User'}</p>
-              <p className="text-[11px] text-white/40">{user?.email || ''}</p>
+          <div className="flex items-center gap-2 sm:gap-3 pl-1.5 sm:pl-2 border-l border-white/10">
+            <div className="text-right hidden md:block">
+              <p className="text-sm font-medium text-white/90 truncate max-w-[120px]">{user?.full_name || 'User'}</p>
+              <p className="text-[11px] text-white/40 truncate max-w-[120px]">{user?.email || ''}</p>
             </div>
-            <Avatar className="h-8 w-8 ring-2 ring-white/10">
+            <Avatar className="h-7 w-7 sm:h-8 sm:w-8 ring-2 ring-white/10 shrink-0">
               <AvatarFallback className="bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-300 text-xs font-semibold">
                 {initials}
               </AvatarFallback>
